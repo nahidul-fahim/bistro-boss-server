@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
+require('dotenv').config()
 const { MongoClient, ServerApiVersion } = require('mongodb');
 const port = process.env.PORT || 5000;
 
@@ -16,7 +17,6 @@ const dbPass = process.env.DB_PASS
 
 
 // Mongodb code snippet
-
 const uri = `mongodb+srv://${dbUser}:${dbPass}@cluster0.xeklkbf.mongodb.net/?retryWrites=true&w=majority`;
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
@@ -31,10 +31,24 @@ const client = new MongoClient(uri, {
 async function run() {
     try {
         // Connect the client to the server	(optional starting in v4.7)
-        await client.connect();
+        // await client.connect();
+
+        // Database and collections
+        const menuCollection = client.db("bistroBossRestaurant").collection('menuCollection');
+        const reviewCollection = client.db("bistroBossRestaurant").collection('reviews');
 
 
+        // Get all the menus
+        app.get("/menu", async (req, res) => {
+            const result = await menuCollection.find().toArray();
+            res.send(result);
+        })
 
+        // Get all the reviews
+        app.get("/reviews", async(req, res) => {
+            const result = await reviewCollection.find().toArray();
+            res.send(result);
+        })
 
 
 
