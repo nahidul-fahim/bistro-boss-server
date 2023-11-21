@@ -35,7 +35,7 @@ async function run() {
         // Database and collections
         const menuCollection = client.db("bistroBossRestaurant").collection('menuCollection');
         const reviewCollection = client.db("bistroBossRestaurant").collection('reviews');
-        const cartCollection = client.db("bistroBossRestaurant").collection('carts');
+        const cartCollection = client.db("bistroBossRestaurant").collection('cartItems');
 
 
         // Get all the menus
@@ -50,8 +50,17 @@ async function run() {
             res.send(result);
         })
 
-        // User's cart collection
-        app.post("/carts", async (req, res) => {
+        // Get all data in cart
+        app.get('/carts', async (req, res) => {
+            const email = req.query.email;
+            const query = { email: email }
+            const result = await cartCollection.find(query).toArray();
+            res.send(result);
+        })
+
+
+        // Post cart info into cart collection
+        app.post("/cart", async (req, res) => {
             const cartItem = req.body;
             const result = await cartCollection.insertOne(cartItem);
             res.send(result);
