@@ -5,7 +5,6 @@ require('dotenv').config()
 const { MongoClient, ServerApiVersion } = require('mongodb');
 const port = process.env.PORT || 5000;
 
-
 // Middleware
 app.use(cors());
 app.use(express.json());
@@ -36,6 +35,7 @@ async function run() {
         // Database and collections
         const menuCollection = client.db("bistroBossRestaurant").collection('menuCollection');
         const reviewCollection = client.db("bistroBossRestaurant").collection('reviews');
+        const cartCollection = client.db("bistroBossRestaurant").collection('carts');
 
 
         // Get all the menus
@@ -45,14 +45,17 @@ async function run() {
         })
 
         // Get all the reviews
-        app.get("/reviews", async(req, res) => {
+        app.get("/reviews", async (req, res) => {
             const result = await reviewCollection.find().toArray();
             res.send(result);
         })
 
-
-
-
+        // User's cart collection
+        app.post("/carts", async (req, res) => {
+            const cartItem = req.body;
+            const result = await cartCollection.insertOne(cartItem);
+            res.send(result);
+        })
 
 
 
