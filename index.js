@@ -51,7 +51,7 @@ async function run() {
         })
 
         // Get all data in cart
-        app.get('/carts', async (req, res) => {
+        app.get('/cart', async (req, res) => {
             const email = req.query.email;
             const query = { email: email }
             const result = await cartCollection.find(query).toArray();
@@ -66,8 +66,8 @@ async function run() {
         })
 
         // Delete item from cart item
-        app.delete("/cart", async (req, res) => {
-            const item = req.query.id;
+        app.delete("/cart/:id", async (req, res) => {
+            const item = req.params.id;
             const query = {_id: new ObjectId(item)};
             const result = await cartCollection.deleteOne(query);
             res.send(result);
