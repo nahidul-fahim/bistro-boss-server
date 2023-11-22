@@ -36,6 +36,32 @@ async function run() {
         const menuCollection = client.db("bistroBossRestaurant").collection('menuCollection');
         const reviewCollection = client.db("bistroBossRestaurant").collection('reviews');
         const cartCollection = client.db("bistroBossRestaurant").collection('cartItems');
+        const userCollection = client.db("bistroBossRestaurant").collection('users');
+
+
+
+        // Post new user info to the database
+        app.post("/user", async (req, res) => {
+            const user = req.body;
+
+            // checking if the user already exists
+            const query = { email: user.email };
+            const existingUser = await userCollection.findOne(query);
+            if (existingUser) {
+                return res.send({ message: "User already exists", insertedId: null });
+            }
+            else {
+                const result = await userCollection.insertOne(user);
+                res.send(result);
+            }
+        });
+
+        // Post cart info to cart collection
+        app.post("/cart", async (req, res) => {
+            const cartItem = req.body;
+            const result = await cartCollection.insertOne(cartItem);
+            res.send(result);
+        })
 
 
         // Get all the menus
@@ -58,18 +84,41 @@ async function run() {
             res.send(result);
         })
 
-        // Post cart info into cart collection
-        app.post("/cart", async (req, res) => {
-            const cartItem = req.body;
-            const result = await cartCollection.insertOne(cartItem);
+        // Get all the users in collection
+        app.get("/users", async (req, res) => {
+            const result = await userCollection.find().toArray();
             res.send(result);
         })
+
 
         // Delete item from cart item
         app.delete("/cart/:id", async (req, res) => {
             const item = req.params.id;
-            const query = {_id: new ObjectId(item)};
+            const query = { _id: new ObjectId(item) };
             const result = await cartCollection.deleteOne(query);
+            res.send(result);
+        })
+
+
+        // delete user from database
+        app.delete("/users/:id", async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: new ObjectId(id) };
+            const result = await userCollection.deleteOne(query);
+            res.send(result);
+        })
+
+
+        // Update user role
+        app.patch("/user/admin/:id", async (req, res) => {
+            const id = req.params.id;
+            const filter = { _id: new ObjectId(id) };
+            const updatedDoc = {
+                $set: {
+                    role: "admin"
+                }
+            };
+            const result = await userCollection.updateOne(filter, updatedDoc);
             res.send(result);
         })
 
