@@ -51,9 +51,8 @@ async function run() {
 
         // verify token middleware
         const verifyToken = (req, res, next) => {
-            console.log("inside verify token", req.headers.authorization);
             if (!req.headers.authorization) {
-                return res.status(401).send({ message: 'Unauthorized' });
+                return res.status(401).send({ message: 'Invalid user' });
             }
             const token = req.headers.authorization.split(' ')[1]
             jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
@@ -87,6 +86,22 @@ async function run() {
             const cartItem = req.body;
             const result = await cartCollection.insertOne(cartItem);
             res.send(result);
+        })
+
+
+        // verify if user is admin or not
+        app.get("/users/admin/:email", verifyToken, async (req, res) => {
+            const email = req.params.email;
+            if (email !== req.decoded.email) {
+                res.status(403).send({ message: "Unauthorized access" })
+            };
+            const query = { email: email };
+            const user = await userCollection.findOne(query);
+            let admin = false;
+            if (user) {
+                admin = user?.role === 'admin';
+            }
+            res.send({ admin });
         })
 
 
