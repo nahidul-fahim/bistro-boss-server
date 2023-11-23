@@ -44,10 +44,26 @@ async function run() {
         // JWT related API
         app.post("/jwt", async (req, res) => {
             const user = req.body;
-            console.log(user);
             const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1h' });
             res.send({ token });
         })
+
+
+        // verify token middleware
+        const verifyToken = (req, res, next) => {
+            console.log("inside verify token", req.headers.authorization);
+            if (!req.headers.authorization) {
+                return res.status(401).send({ message: 'Unauthorized' });
+            }
+            const token = req.headers.authorization.split(' ')[1]
+            jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
+                if (err) {
+                    return res.status(401).send({ message: 'Unauthorized' });
+                }
+                req.decoded = decoded;
+                next();
+            })
+        }
 
 
         // Post new user info to the database
@@ -95,7 +111,7 @@ async function run() {
         })
 
         // Get all the users in collection
-        app.get("/users", async (req, res) => {
+        app.get("/users", verifyToken, async (req, res) => {
             const result = await userCollection.find().toArray();
             res.send(result);
         })
