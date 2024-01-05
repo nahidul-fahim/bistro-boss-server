@@ -3,6 +3,8 @@ require('dotenv').config();
 
 const getConnectionString = () => {
     let connectionURI;
+
+    // checking if the project is in development or in production to get the database uri
     if (process.env.NODE_ENV === "development") {
         connectionURI = process.env.DB_LOCAL;
         connectionURI = connectionURI.replace('<username>', process.env.DB_USER);

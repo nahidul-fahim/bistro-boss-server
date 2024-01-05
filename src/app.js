@@ -5,9 +5,16 @@ const app = express();
 require('dotenv').config();
 const port = process.env.PORT || 5000;
 
+const authenticationRouter = require('./router/authentication/authentication')
+
 
 // call apply middleware
 applyMiddleware(app);
+
+
+// JWT related API
+app.use(authenticationRouter);
+
 
 
 // checking if server is running
@@ -33,6 +40,7 @@ app.use((err, req, res, next) => {
 
 
 const main = async () => {
+    // connecting to databse using 'connectDB' function
     await connectDB();
     // listening to the port
     app.listen(port, () => {
