@@ -1,15 +1,13 @@
-const express = require('express');
-const app = express();
+
+
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
-require('dotenv').config()
-const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
-const port = process.env.PORT || 5000;
 
-// Middleware
-app.use(cors());
-app.use(express.json());
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
+
+
+
 
 
 // Database user and password
@@ -187,12 +185,3 @@ async function run() {
     }
 }
 run().catch(console.dir);
-
-
-app.get("/", (req, res) => {
-    res.send("Bistro Boss Restaurant is running fine.")
-});
-
-app.listen(port, () => {
-    console.log(`Bistro boss server is running on port: ${port}`)
-});
