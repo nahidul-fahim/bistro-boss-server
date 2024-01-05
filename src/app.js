@@ -1,8 +1,12 @@
 const express = require('express');
+const applyMiddleware = require('./middlewares/applyMiddleware');
 const app = express();
 require('dotenv').config();
 const port = process.env.PORT || 5000;
 
+
+// call apply middleware
+applyMiddleware(app);
 
 
 // checking if server is running
