@@ -5,6 +5,7 @@ const app = express();
 require('dotenv').config();
 const port = process.env.PORT || 5000;
 const authenticationRouter = require('./router/authentication/authentication')
+const menuRoutes = require('./router/menus/menuIndex')
 
 
 // call apply middleware
@@ -13,6 +14,20 @@ applyMiddleware(app);
 // JWT related API
 app.use(authenticationRouter);
 
+// menu related api
+app.use(menuRoutes);
+
+
+
+
+
+// Get all the menus
+/*
+app.get("/menu", async (req, res) => {
+    const result = await menuCollection.find().toArray();
+    res.send(result);
+})
+*/
 
 
 
