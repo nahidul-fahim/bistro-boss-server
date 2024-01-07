@@ -101,11 +101,6 @@ async function run() {
         })
 
 
-        // Get all the menus
-        app.get("/menu", async (req, res) => {
-            const result = await menuCollection.find().toArray();
-            res.send(result);
-        })
 
         // Get all the reviews
         app.get("/reviews", async (req, res) => {

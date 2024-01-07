@@ -1,12 +1,10 @@
 const express = require('express');
 const Menu = require('../../models/Menu');
+const findAllMenus = require('../../api/findAllMenus/findAllMenus');
 const router = express.Router();
 
 
-router.get("/menu", async (req, res) => {
-    const result = await Menu.find();
-    res.send(result);
-})
+router.get("/menu", findAllMenus)
 
 
 module.exports = router;

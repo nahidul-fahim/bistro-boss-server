@@ -21,17 +21,6 @@ app.use(menuRoutes);
 
 
 
-// Get all the menus
-/*
-app.get("/menu", async (req, res) => {
-    const result = await menuCollection.find().toArray();
-    res.send(result);
-})
-*/
-
-
-
-
 
 
 
