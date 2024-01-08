@@ -7,6 +7,7 @@ const port = process.env.PORT || 5000;
 const authenticationRouter = require('./router/authentication/authentication')
 const menuRoutes = require('./router/menus/menuIndex')
 const insertCartItemsRoute = require("./router/insertCartItem/insertCartItem")
+const getCartItemsRouter = require("./router/getCartItem/getCartItem")
 
 
 // call apply middleware
@@ -15,8 +16,10 @@ applyMiddleware(app);
 // JWT related API
 app.use(authenticationRouter);
 
-// menu related api
+// get all the menus
 app.use(menuRoutes);
+//get all the cart data
+app.use(getCartItemsRouter)
 
 
 // insert new data to cart collection

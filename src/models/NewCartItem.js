@@ -28,6 +28,6 @@ const InsertCartSchema = new Schema({
 }, { collection: 'cartItems' })
 
 
-const InsertCartItem = model('InsertCartItem', InsertCartSchema);
+const CartItem = model('CartItem', InsertCartSchema);
 
-module.exports = InsertCartItem;
+module.exports = CartItem;

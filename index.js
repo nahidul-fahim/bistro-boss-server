@@ -37,14 +37,6 @@ async function run() {
         const userCollection = client.db("bistroBossRestaurant").collection('users');
 
 
-        // JWT related API
-        app.post("/jwt", async (req, res) => {
-            const user = req.body;
-            const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1h' });
-            res.send({ token });
-        })
-
-
 
 
         // verify admin middleware. Verify after token verification
@@ -101,12 +93,12 @@ async function run() {
         })
 
         // Get all data in cart
-        app.get('/cart', async (req, res) => {
-            const email = req.query.email;
-            const query = { email: email }
-            const result = await cartCollection.find(query).toArray();
-            res.send(result);
-        })
+        // app.get('/cart', async (req, res) => {
+        //     const email = req.query.email;
+        //     const query = { email: email }
+        //     const result = await cartCollection.find(query).toArray();
+        //     res.send(result);
+        // })
 
         // Get all the users in collection
         app.get("/users", verifyToken, verifyAdmin, async (req, res) => {
