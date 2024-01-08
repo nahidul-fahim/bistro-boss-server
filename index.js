@@ -47,7 +47,6 @@ async function run() {
 
 
 
-
         // verify admin middleware. Verify after token verification
         const verifyAdmin = async (req, res, next) => {
             const email = req.decoded.email;
@@ -76,13 +75,6 @@ async function run() {
                 res.send(result);
             }
         });
-
-        // Post cart info to cart collection
-        app.post("/cart", async (req, res) => {
-            const cartItem = req.body;
-            const result = await cartCollection.insertOne(cartItem);
-            res.send(result);
-        })
 
 
         // verify if user is admin or not

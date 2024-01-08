@@ -6,6 +6,7 @@ require('dotenv').config();
 const port = process.env.PORT || 5000;
 const authenticationRouter = require('./router/authentication/authentication')
 const menuRoutes = require('./router/menus/menuIndex')
+const insertCartItemsRoute = require("./router/insertCartItem/insertCartItem")
 
 
 // call apply middleware
@@ -18,8 +19,8 @@ app.use(authenticationRouter);
 app.use(menuRoutes);
 
 
-
-
+// insert new data to cart collection
+app.use(insertCartItemsRoute)
 
 
 
