@@ -8,6 +8,7 @@ const authenticationRouter = require('./router/authentication/authentication')
 const menuRoutes = require('./router/menus/menuIndex')
 const insertCartItemsRoute = require("./router/insertCartItem/insertCartItem")
 const getCartItemsRouter = require("./router/getCartItem/getCartItem")
+const deleteCartItemRouter = require("./api/deleteCartItemApi/deleteCartItemApi")
 
 
 // call apply middleware
@@ -20,10 +21,10 @@ app.use(authenticationRouter);
 app.use(menuRoutes);
 //get all the cart data
 app.use(getCartItemsRouter)
-
-
 // insert new data to cart collection
 app.use(insertCartItemsRoute)
+// delete a cart item from database
+app.use(deleteCartItemRouter)
 
 
 

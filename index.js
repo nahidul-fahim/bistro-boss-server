@@ -85,33 +85,16 @@ async function run() {
         })
 
 
-
         // Get all the reviews
         app.get("/reviews", async (req, res) => {
             const result = await reviewCollection.find().toArray();
             res.send(result);
         })
 
-        // Get all data in cart
-        // app.get('/cart', async (req, res) => {
-        //     const email = req.query.email;
-        //     const query = { email: email }
-        //     const result = await cartCollection.find(query).toArray();
-        //     res.send(result);
-        // })
 
         // Get all the users in collection
         app.get("/users", verifyToken, verifyAdmin, async (req, res) => {
             const result = await userCollection.find().toArray();
-            res.send(result);
-        })
-
-
-        // Delete item from cart item
-        app.delete("/cart/:id", async (req, res) => {
-            const item = req.params.id;
-            const query = { _id: new ObjectId(item) };
-            const result = await cartCollection.deleteOne(query);
             res.send(result);
         })
 
