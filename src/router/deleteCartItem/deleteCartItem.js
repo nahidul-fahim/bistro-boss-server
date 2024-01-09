@@ -1,8 +1,8 @@
 const express = require('express');
-const deleteCartItem = require('../../api/deleteCartItemApi/deleteCartItemApi');
+const deleteCartItemApi = require('../../api/deleteCartItemApi/deleteCartItemApi');
 const router = express.Router();
 
-router.delete("/cart/:id", deleteCartItem)
+router.delete("/deletecartitem/:id", deleteCartItemApi)
 
 
-module.exporst = router;
+module.exports = router;
