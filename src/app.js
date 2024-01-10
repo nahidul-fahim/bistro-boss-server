@@ -9,6 +9,7 @@ const menuRoutes = require('./router/menus/menuIndex')
 const insertCartItemsRoute = require("./router/insertCartItem/insertCartItem")
 const getCartItemsRouter = require("./router/getCartItem/getCartItem")
 const deleteCartItemRoute = require("./router/deleteCartItem/deleteCartItem")
+const adminCheckRoute = require("./router/verifyAdmin/verifyAdmin")
 
 
 // call apply middleware
@@ -25,6 +26,8 @@ app.use(getCartItemsRouter)
 app.use(insertCartItemsRoute)
 // delete a cart item from database
 app.use(deleteCartItemRoute);
+// checking if user is admin
+app.use(adminCheckRoute)
 
 
 
