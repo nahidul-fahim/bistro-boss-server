@@ -1,9 +1,9 @@
-const express = require('express');
-const verifyToken = require('../../middlewares/verifyToken');
-const UserCollection = require('../../models/UserCollection');
-const router = express.Router();
+const verifyToken = require("../../middlewares/verifyToken");
+const UserCollection = require("../../models/UserCollection");
 
-router.get("/users/admin/:email", async (req, res) => {
+
+
+const adminCheck = async (req, res) => {
     const email = req.params.email;
     console.log("getting admin verifying email from params:" + " " + email)
 
@@ -28,7 +28,6 @@ router.get("/users/admin/:email", async (req, res) => {
             res.status(500).send({ message: 'Internal Server Error' });
         }
     })
-})
+}
 
-
-module.exports = router;
+module.exports = adminCheck;

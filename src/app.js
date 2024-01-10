@@ -9,7 +9,7 @@ const menuRoutes = require('./router/menus/menuIndex')
 const insertCartItemsRoute = require("./router/insertCartItem/insertCartItem")
 const getCartItemsRouter = require("./router/getCartItem/getCartItem")
 const deleteCartItemRoute = require("./router/deleteCartItem/deleteCartItem")
-const adminCheckRoute = require("./router/verifyAdmin/verifyAdmin")
+const adminCheckRoute = require("./router/adminCheck/adminCheck")
 
 
 // call apply middleware
